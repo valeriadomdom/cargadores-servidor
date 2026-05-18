@@ -10,12 +10,9 @@ const bcrypt = require('bcryptjs');
 const SECRET = 'cargadores_secret_key';
 
 // Conexión con la base de datos
-const pool = new Pool({
-  user: process.env.PGUSER || 'postgres',
-  host: process.env.PGHOST || 'localhost',
-  database: process.env.PGDATABASE || 'cargadores_db',
-  password: process.env.PGPASSWORD || '1234',
-  port: process.env.PGPORT || 5432,
+ const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:nkFXHBXbmppBcTmflSfpNrEFPzkpcjGJ@postgres.railway.internal:5432/railway',
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
 // Obtener todos los cargadores
