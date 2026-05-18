@@ -76,6 +76,8 @@ app.post('/login', async function(req, res) {
   const token = jwt.sign({ id: usuario.id, email: usuario.email, rol: usuario.rol }, SECRET);
   res.json({ token, rol: usuario.rol });
 });
-app.listen(4000, function() {
-  console.log('Servidor corriendo en http://localhost:4000');
+// ✅ Después
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, function() {
+  console.log('Servidor corriendo en el puerto ' + PORT);
 });
