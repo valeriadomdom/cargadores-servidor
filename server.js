@@ -3,7 +3,11 @@ const cors = require('cors');
 const { Pool } = require('pg');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://cargadores-app.vercel.app',
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
