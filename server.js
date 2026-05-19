@@ -6,7 +6,7 @@ const app = express();
 app.use(cors({
   origin: 'https://cargadores-app.vercel.app',
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
 const jwt = require('jsonwebtoken');
