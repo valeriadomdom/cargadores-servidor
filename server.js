@@ -80,6 +80,6 @@ app.post('/login', async function(req, res) {
 });
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, function() {
+app.listen(PORT, '0.0.0.0', function() {
   console.log('Servidor corriendo en el puerto ' + PORT);
 });
