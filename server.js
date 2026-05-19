@@ -20,6 +20,15 @@ app.use(express.json());
 // ─── FAVICON (evita el 502) ───────────────────────────────────────────────────
 app.get('/favicon.ico', (req, res) => res.status(204).end());
  
+app.get('/test', async function(req, res) {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ ok: true, tiempo: result.rows[0] });
+  } catch(err) {
+    res.json({ ok: false, error: err.message });
+  }
+});
+
 // ─── BASE DE DATOS ────────────────────────────────────────────────────────────
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://postgres:nkFXHBXbmppBcTmflSfpNrEFPzkpcjGJ@autorack.proxy.rlwy.net:43980/railway',
