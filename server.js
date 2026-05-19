@@ -22,10 +22,8 @@ app.get('/favicon.ico', (req, res) => res.status(204).end());
  
 // ─── BASE DE DATOS ────────────────────────────────────────────────────────────
 const pool = new Pool({
-  connectionString:
-    process.env.DATABASE_URL ||
-    'postgresql://postgres:nkFXHBXbmppBcTmflSfpNrEFPzkpcjGJ@postgres.railway.internal:5432/railway',
-  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:nkFXHBXbmppBcTmflSfpNrEFPzkpcjGJ@autorack.proxy.rlwy.net:43980/railway',
+  ssl: { rejectUnauthorized: false }
 });
  
 // ─── MIDDLEWARE DE AUTENTICACIÓN ──────────────────────────────────────────────
