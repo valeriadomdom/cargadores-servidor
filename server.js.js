@@ -26,6 +26,32 @@ const pool = new Pool({
 // ─── FAVICON ───────────────────────────────────────────────────────────────────
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
+// ─── SETUP: crear tablas ───────────────────────────────────────────────────────
+app.get('/setup', async function (req, res) {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS usuarios (
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        rol VARCHAR(50) DEFAULT 'admin'
+      )
+    `);
+    await pool.query(`
+      DROP TABLE IF EXISTS cargadores;
+      CREATE TABLE cargadores (
+        id SERIAL PRIMARY KEY,
+        nombre VARCHAR(255) NOT NULL,
+        ubicacion VARCHAR(255) NOT NULL,
+        estado VARCHAR(50) DEFAULT 'disponible'
+      )
+    `);
+    res.json({ ok: true, mensaje: 'Tablas creadas correctamente' });
+  } catch (err) {
+    res.json({ ok: false, error: err.message });
+  }
+});
+
 // ─── TEST DB ───────────────────────────────────────────────────────────────────
 app.get('/test', async function (req, res) {
   try {
@@ -163,6 +189,7 @@ app.delete('/cargadores/:id', verificarToken, async function (req, res) {
     res.status(500).json({ error: 'Error al eliminar cargador' });
   }
 });
+
 process.on('uncaughtException', function(err) {
   console.error('Error no capturado:', err.message);
 });
@@ -170,6 +197,7 @@ process.on('uncaughtException', function(err) {
 process.on('unhandledRejection', function(err) {
   console.error('Promesa rechazada:', err.message);
 });
+
 // ─── ARRANQUE ──────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', function () {
