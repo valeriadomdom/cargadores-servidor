@@ -163,7 +163,13 @@ app.delete('/cargadores/:id', verificarToken, async function (req, res) {
     res.status(500).json({ error: 'Error al eliminar cargador' });
   }
 });
+process.on('uncaughtException', function(err) {
+  console.error('Error no capturado:', err.message);
+});
 
+process.on('unhandledRejection', function(err) {
+  console.error('Promesa rechazada:', err.message);
+});
 // ─── ARRANQUE ──────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', function () {
