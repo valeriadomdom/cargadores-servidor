@@ -83,5 +83,7 @@ app.post('/login', async function(req, res) {
 // ✅ Después
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, function() {
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, function() {
   console.log('Servidor corriendo en el puerto ' + PORT);
 });
