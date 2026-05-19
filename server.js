@@ -7,11 +7,15 @@ const bcrypt = require('bcryptjs');
 const app = express();
 const SECRET = 'cargadores_secret_key';
 
-app.use(cors({
-  origin: 'https://cargadores-app.vercel.app',
-  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'https://cargadores-app.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 app.use(express.json());
 
 const pool = new Pool({
